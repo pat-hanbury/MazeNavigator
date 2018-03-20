@@ -98,9 +98,12 @@ void maze::mapMazeToGraph(Graph &g) {
 			
 			//if the current cell is legal
 			if (isLegal(i,j)) {
-				v = add_vertex(g); //add current cell as a node and store the vertex descriptor
-				g[v].cell = std::pair<int,int>(i,j); //store the cell in the vertex property cell
-				vertexCoords[i][j] = v; //store the node number in the correct cell location
+				//This function adds the current cell as a nodes and stores the vertex descript.
+				v = add_vertex(g); 
+				//Stores the cell in the vertex prop. cell
+				g[v].cell = std::pair<int,int>(i,j);
+				//Stores the node number in the correct cell location
+				vertexCoords[i][j] = v; 
 			}
 		}
 	}
@@ -111,17 +114,21 @@ void maze::mapMazeToGraph(Graph &g) {
 			
 			//if the current cell is legal
 			if (isLegal(i, j)) {
-				if (isLegal(i, j + 1))//check if the cell to the right is legal
-					//if yes add edge from current to right
+				//Checks if the right cell is legal.
+				//Adds edge from current to the right cell. 
+				if (isLegal(i, j + 1))
 					add_edge(vertexCoords[i][j], vertexCoords[i][j + 1], g);
-				if (isLegal(i + 1, j))//check if the cell underneath is legal
-					//if yes add edge from current to cell underneath
+				//checks if the underneath cell is legal
+				//adds edge from current to the underneath cell
+				if (isLegal(i + 1, j))
 					add_edge(vertexCoords[i][j], vertexCoords[i + 1][j], g);
-				if (isLegal(i, j - 1))//check if cell to the left is legal
-					//if yes add edge from current to left
+				//checks if the left cell is legal
+				//adds edge from the current to the left cell 
+				if (isLegal(i, j - 1))
 					add_edge(vertexCoords[i][j], vertexCoords[i][j - 1], g);
-				if (isLegal(i - 1, j))//check if cell on top is legal
-					//if yes add edge from current to top
+				//checks if the top cell is legal. 
+				//adds edge from the current to the top cell. 
+				if (isLegal(i - 1, j))
 					add_edge(vertexCoords[i][j], vertexCoords[i - 1][j], g);
 			}
 		}
@@ -131,10 +138,29 @@ void maze::mapMazeToGraph(Graph &g) {
 	clearVisited(g);
 	clearMarked(g);
 }
-	
 
-
+//printPath function on a graph 
 void maze::printPath(Graph::vertex_descriptor end,
-                     stack<Graph::vertex_descriptor> &s,
-                     Graph g)
-
+    stack<Graph::vertex_descriptor> &s, 
+	Graph g) {	
+	//Contained in the stack
+	Graph::vertex_descriptor currentNode;
+		//if statement that checks to see if the stack is empty
+		if (s.empty()) 
+			//output statement that says it is empty
+			std::cout << "Stack is empty"; 
+		//else statement that checks otherwise
+		else{ 
+		//do loop
+			do{
+			//currentNode becomes the top of the stack 
+			currentNode = s.top(); 
+			//pops the top node off the stack
+			s.pop(); 
+			//calls the print function earlier used in the program
+			print(g[end].cell.first, g[end].cell.second, g[currentNode].cell.first, g[currentNode].cell.second);
+			} 
+			//while statement that acts as the stop operator if the stack is empty
+			while (currentNode != end); 
+		}
+}
