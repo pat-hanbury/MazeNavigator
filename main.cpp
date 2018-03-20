@@ -4,8 +4,9 @@
 #include <list>
 #include <fstream>
 #include <queue>
+#include "maze.h"
 
-#include <boost/graph/adjacency_list.hpp>
+#include "boost_1_66_0/boost/graph/adjacency_list.hpp"
 
 using namespace boost;
 using namespace std;
@@ -38,13 +39,13 @@ typedef adjacency_list<vecS, vecS, bidirectionalS, VertexProperties, EdgePropert
 
 #define LargeValue 99999999
 
-void clearVisited(Graph &g)
+void clearVisited(Graph &g);
 // Mark all nodes in g as not visited.
 
-void setNodeWeights(Graph &g, int w)
+void setNodeWeights(Graph &g, int w);
 // Set all node weights to w.
 
-void clearMarked(Graph &g)
+void clearMarked(Graph &g);
    
 int main()
 {
