@@ -31,7 +31,7 @@ typedef adjacency_list<vecS, vecS, bidirectionalS, VertexProperties, EdgePropert
 // typedef property<edge_weight_t, int> EdgeProperty;
 
 //relax function that relaxes the edge between nodes u and v in a graph
-void relax(Graph &g, Graph::vertex_descriptor u, Graph::vertex_descriptor v);
+void relax(Graph &g, Graph::edge_descriptor e);
 
 //Determines the shortest path from node s to every node in g. Node weights must
 //be positive. returns tru if path exists to every node, and false if no
@@ -125,7 +125,6 @@ bool findPathDFSRecursive(Graph & g, Graph::vertex_descriptor v, stack<Graph::ve
 }
 
 std::stack<Graph::vertex_descriptor> findShortestPathDFS(Graph g, Graph::vertex_descriptor v) {
-
 	std::pair<Graph::vertex_iterator, Graph::vertex_iterator> startToEnd = vertices(g);
 	std::pair<Graph::adjacency_iterator, Graph::adjacency_iterator> legalMoves = adjacent_vertices(v, g);
 	std::stack<Graph::vertex_descriptor> partialPath, path;
@@ -152,11 +151,11 @@ std::stack<Graph::vertex_descriptor> findShortestPathDFS(Graph g, Graph::vertex_
 }
 
 //relax function that relaxes the edge between nodes u and v in a graph
-void relax(Graph &g, Graph::vertex_descriptor u, Graph::vertex_descriptor v) {
-
-	//CODE
-
-
+void relax(Graph &g, Graph::edge_descriptor e) {
+	if (g[target(e, g)].weight > g[source(e, g)].weight + g[e].weight) {
+		g[target(e, g)].weight = g[source(e, g)].weight + g[e].weight;
+		g[target(e, g)].pred = source(e, g);
+	}
 }
 
 void initSingleSource(Graph &g, Graph::vertex_descriptor source) {
