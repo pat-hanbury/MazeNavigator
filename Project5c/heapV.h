@@ -51,6 +51,8 @@ public:
    void maxHeapInsert(T key, U &g);
    void minHeapInsert(T key, U &g);
    
+   bool isEmpty(); //True is heap is empty. False if not.
+
 private:
    vector<T> list;
 };
@@ -290,4 +292,14 @@ ostream &operator<<(ostream &ostr, heapV<T,U> &h)
    
    return ostr;
 }
+
+//Returns True if heap is empty. False otherwise
+template <typename T, typename U>
+bool heapV<T, U>::isEmpty() {
+	if (list.size() == 0) {
+		return true;
+	}
+	return false;
+}
+
 #endif
